@@ -1,3 +1,6 @@
 
-init apply plan destroy:
+plan destroy init:
 	terraform $@
+
+apply:
+	terraform $@ -auto-approve

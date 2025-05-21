@@ -128,10 +128,10 @@ update:
 	make start
 
 init plan apply:
-	cd ./terraform/aws && terraform $@
+	make -C ./terraform/aws $@
 
 remote-state:
-	cd ./terraform/aws-remote-state/ && terraform init && terraform plan && terraform apply
+	make -C ./terraform/aws-remote-state/ init plan apply
 
 	
 .PHONY: html help clean regenerate serve serve-global devserver stopserver publish ssh_upload rsync_upload dropbox_upload ftp_upload s3_upload cf_upload github plan apply
