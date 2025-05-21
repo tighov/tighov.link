@@ -1,4 +1,0 @@
-pelican==3.7.1
-Markdown==3.0.1
-s3cmd==2.0.2
-awscli
