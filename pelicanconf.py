@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'Tigran Hovhannisyan'
-SITENAME = 'The Tigran'
+SITENAME = 'The Hov'
 
 SITETITLE = 'C, C++, Python, AWS, GO, Back-End, Dev-Ops'
 SITESUBTITLE = 'and other stuff developers do'

@@ -53,13 +53,11 @@ Once we are finished we are going to have the following components:
 
 Now we are going to go through each of the files that make up our Terraform project with an explanation of what each of them are doing.
 
-You might want to fork [my GitHub repo](https://github.com/tighov/tighov.link) and follow along with this tutorial.
-
 ### Creating a bucket to store state files
 
 There is one bit of infrastructure that we are going to set up manually and that is the S3 bucket for storing the Terraform state files. You technically could set this up with another terraform script but then you would still need to store the state file for that as well.
 
-In these examples, I have called this S3 bucket yourdomain-terraform. You will want to call yours something meaningful but as with all S3 buckets it needs to be globally unique.
+In these examples, I have called this S3 bucket `yourdomain-tf`. You will want to call yours something meaningful but as with all S3 buckets it needs to be globally unique.
 
 Once created you can give it the following policy, making sure you update the account ID and bucket name.
 
@@ -73,7 +71,7 @@ Once created you can give it the following policy, making sure you update the ac
         "AWS": "arn:aws:iam::1234567890:root"
       },
       "Action": "s3:ListBucket",
-      "Resource": "arn:aws:s3:::yourdomain-terraform"
+      "Resource": "arn:aws:s3:::yourdomain-tf"
     },
     {
       "Effect": "Allow",
@@ -81,7 +79,7 @@ Once created you can give it the following policy, making sure you update the ac
         "AWS": "arn:aws:iam::1234567890:root"
       },
       "Action": ["s3:GetObject", "s3:PutObject"],
-      "Resource": "arn:aws:s3:::yourdomain-terraform/*"
+      "Resource": "arn:aws:s3:::yourdomain-tf/*"
     }
   ]
 }
@@ -106,14 +104,14 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "yourdomain-terraform"
-    key    = "prod/terraform.tfstate"
-    region = "eu-west-1"
+    bucket = "yourdomain-tf"
+    key    = "prod.tfstate"
+    region = "us-east-1"
   }
 }
 
 provider "aws" {
-  region = "eu-west-1"
+  region = "us-east-1"
 }
 
 provider "aws" {
@@ -130,7 +128,7 @@ I have set up 2 providers here. The first AWS provider is the default provider (
 
 The second AWS provider is specifically for the SSL certificate. These need to be created in us-east-1 for Cloudfront to be able to use them.
 
-In this example I am creating everything in EU Ireland eu-west-1, make sure you update this for your targeted region.
+In this example I am creating everything in N. Virginia us-east-1, make sure you update this for your targeted region.
 
 ### variables.tf
 
@@ -139,14 +137,12 @@ In this file, we define the variables that we are going to use. In this project,
 ```
 variable "domain_name" {
   type        = string
-  description = "The domain name for the website."
+  description = "Name of the domain"
 }
-
-variable "bucket_name" {
+variable "region" {
   type        = string
-  description = "The name of the bucket without the www. prefix. Normally domain_name."
+  description = "The AWS region to create the bucket in."
 }
-
 variable "common_tags" {
   description = "Common tags you want applied to all components."
 }
@@ -158,11 +154,12 @@ We are going to use these 3 variables throughout the project.
 The tfvars file is used to specify variable values. These will need to be updated for your domain.
 
 ```
-domain_name = "yourdomain.com"
-bucket_name = "yourdomain.com"
-
+domain_name = "tighov.link"
+region      = "us-east-1"
 common_tags = {
-  Project = "yourdomain"
+  Project        = "tighov.link"
+  Environment    = "prod"
+  Owner          = "tighov.link.admin"
 }
 ```
 
@@ -173,11 +170,13 @@ The common_tags will be added to all the resources we are creating. This is usef
 In this file, we are going to set up our S3 buckets. Technically you can put all the Terraform configuration in one file but I like to separate them into different components, it is just clearer this way.
 
 ```
-# S3 bucket for website.
 resource "aws_s3_bucket" "www_bucket" {
-  bucket = "www.${var.bucket_name}"
-  acl    = "public-read"
-  policy = templatefile("templates/s3-policy.json", { bucket = "www.${var.bucket_name}" })
+  bucket = "www.${var.domain_name}"
+  tags   = var.common_tags
+}
+
+resource "aws_s3_bucket_cors_configuration" "www_bucket_cors" {
+  bucket = aws_s3_bucket.www_bucket.id
 
   cors_rule {
     allowed_headers = ["Authorization", "Content-Length"]
@@ -185,27 +184,78 @@ resource "aws_s3_bucket" "www_bucket" {
     allowed_origins = ["https://www.${var.domain_name}"]
     max_age_seconds = 3000
   }
+}
 
-  website {
-    index_document = "index.html"
-    error_document = "404.html"
+resource "aws_s3_bucket_ownership_controls" "www_bucket" {
+  bucket = aws_s3_bucket.www_bucket.id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "www_bucket" {
+  bucket = aws_s3_bucket.www_bucket.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_website_configuration" "www_bucket_website" {
+  bucket = aws_s3_bucket.www_bucket.id
+
+  index_document {
+    suffix = "index.html"
   }
 
-  tags = var.common_tags
+  error_document {
+    key = "404.html"
+  }
+}
+
+resource "aws_s3_bucket_policy" "www_bucket_policy" {
+  bucket = aws_s3_bucket.www_bucket.id
+  policy = templatefile("templates/s3-policy.json", { bucket = "www.${var.domain_name}" })
 }
 
 # S3 bucket for redirecting non-www to www.
 resource "aws_s3_bucket" "root_bucket" {
-  bucket = var.bucket_name
-  acl    = "public-read"
-  policy = templatefile("templates/s3-policy.json", { bucket = var.bucket_name })
-
-  website {
-    redirect_all_requests_to = "https://www.${var.domain_name}"
-  }
-
-  tags = var.common_tags
+  bucket = var.domain_name
 }
+
+resource "aws_s3_bucket_ownership_controls" "root_bucket" {
+  bucket = aws_s3_bucket.root_bucket.id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "root_bucket" {
+  bucket = aws_s3_bucket.root_bucket.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_website_configuration" "root_bucket_website" {
+  bucket = aws_s3_bucket.root_bucket.id
+
+  redirect_all_requests_to {
+    host_name = "www.${var.domain_name}"
+    protocol  = "https"
+  }
+}
+
+resource "aws_s3_bucket_policy" "root_bucket_policy" {
+  bucket = aws_s3_bucket.root_bucket.id
+  policy = templatefile("templates/s3-policy.json", { bucket = var.domain_name })
+}
+
 ```
 
 The first S3 bucket is where we are going to host all our website files. At a minimum, you will need to upload an index.html and a 404.html file in this bucket once it has been created.
