@@ -1,5 +1,5 @@
 
-plan destroy init:
+validate plan destroy init:
 	terraform $@
 
 apply:
