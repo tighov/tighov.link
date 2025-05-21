@@ -72,8 +72,8 @@ jobs:
 
       - name: Terraform apply
         run: |
-          terraform apply
-          
+          make apply
+
   deploy:
     runs-on: ubuntu-latest
     needs: [build, provision]
