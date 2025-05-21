@@ -12,7 +12,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
       - name: Install requirements
+        environment: 
+          PIPENV_VENV_IN_PROJECT: True
         run: pip install --upgrade pip && pip install pipenv && pipenv install
+      - name: Activate virtual environment
+        run: echo PATH=${GITHUB_WORKSPACE}/.venv/bin:$PATH >> $GITHUB_ENV
       - name: Build Pelican site
         shell: python
         run: |
