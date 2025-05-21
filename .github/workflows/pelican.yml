@@ -85,7 +85,7 @@ jobs:
           terraform apply
   deploy:
     runs-on: ubuntu-latest
-    needs: build provision
+    needs: [build, provision]
     steps:
       - uses: actions/download-artifact@master
         with:
