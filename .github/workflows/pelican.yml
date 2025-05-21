@@ -23,7 +23,7 @@ jobs:
         run: |
           import subprocess
 
-          cmd = "pelican"
+          cmd = "pipenv run pelican"
           cmd += " --settings ${{ inputs.settings }}"
           cmd += " --extra-settings"
           cmd += """ SITEURL='"${{ inputs.siteurl || steps.pages.outputs.base_url }}"'"""
