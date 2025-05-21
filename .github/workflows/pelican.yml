@@ -7,9 +7,9 @@ env:
   PYTHON_VERSION: '3.13'
   AWS_REGION: 'us-east-1'
   PELICAN_SETTINGS: 'pelicanconf.py'
-  SITEURL: 'https://tighov.link'
-  FEED_DOMAIN: 'https://tighov.link'
-  BUCKET_NAME: 'tighov.link'
+  SITEURL: 'https://www.tighov.link'
+  FEED_DOMAIN: 'https://www.tighov.link'
+  BUCKET_NAME: 'www.tighov.link'
   OUTPUT_PATH: 'output'
 jobs:
   build:
