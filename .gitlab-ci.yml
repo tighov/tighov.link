@@ -1,0 +1,19 @@
+image: "python:2"
+
+before_script:
+    - apt-get -qy update
+    - apt-get -y install python-pip
+    - pip install -r requirements.txt
+    - pip freeze
+
+stages:
+  - build
+
+main:
+  stage: build
+  script:
+    - git clone --recursive https://gitlab+deploy-token-47763:3riXCCzYy2SSeVyP7dLM@gitlab.com/htigran/pelican-valtig.git
+    - pelican-themes -U pelican-valtig
+    - make publish
+    - cp secret/.s3cfg ~/
+    - make s3_upload

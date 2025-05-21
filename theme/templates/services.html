@@ -1,0 +1,24 @@
+{% if SERVICES %}
+<section class="section services">
+  <div class="section-content">
+    <div class="container">
+      <div class="row">
+        {% for icon,title,desc in SERVICES %}
+        <div class="service col-lg-4 mt-6 mt-lg-0">
+          <div class="card">
+            <div class="service-icon text-center">
+              <span class="{{ icon }}"></span>
+            </div>
+            <div class="about-service">
+              <h4 class="text-center">{{ title }}</h4>
+              <p class="text-center">{{ desc }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+<hr>  
+{% endif %}
