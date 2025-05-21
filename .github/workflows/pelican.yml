@@ -9,6 +9,7 @@ env:
   PELICAN_SETTINGS: 'pelicanconf.py'
   SITEURL: 'https://tighov.link'
   FEED_DOMAIN: 'https://tighov.link'
+  BUCKET_NAME: 'tighov.link'
   OUTPUT_PATH: 'output'
 jobs:
   build:
@@ -36,13 +37,26 @@ jobs:
           cmd += " --theme-path theme"
 
           subprocess.run(cmd, shell=True, check=True)
+      - name: Upload outputfolder 
+        uses: actions/upload-artifact@master
+        with:
+          name: outputfolder
+          path: ./${{ env.OUTPUT_PATH }}/
   deploy:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: outputfolder
+          path: ./${{ env.OUTPUT_PATH }}/
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+      - name: Copy files to S3 bucket
+        run: |
+          ls
+          aws s3 sync ${{ env.OUTPUT_PATH }}/ s3://${{ env.BUCKET_NAME }}
