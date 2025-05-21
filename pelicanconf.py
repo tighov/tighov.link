@@ -8,7 +8,7 @@ SITENAME = 'The Hov'
 SITETITLE = 'C, C++, Python, AWS, GO, Back-End, Dev-Ops'
 SITESUBTITLE = 'and other stuff developers do'
 
-SITEURL = ''
+SITEURL = 'https://tighov.link'
 
 PATH = 'content'
 
