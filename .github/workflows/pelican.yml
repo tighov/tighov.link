@@ -5,6 +5,7 @@ on:
       - main
 env:
   PYTHON_VERSION: '3.13'
+  AWS_REGION: 'us-east-1'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,8 +18,6 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Install requirements
         run: pip install --upgrade pip && pip install pipenv && pipenv install
-      - name: Activate virtual environment
-        run: echo PATH=${GITHUB_WORKSPACE}/.venv/bin:$PATH >> $GITHUB_ENV
       - name: Build Pelican site
         shell: python
         run: |
@@ -35,5 +34,13 @@ jobs:
               cmd += " --theme-path .theme"
 
           subprocess.run(cmd, shell=True, check=True)
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
