@@ -1,10 +1,12 @@
-resource "aws_route53_zone" "main" {
-  name = var.domain_name
-  tags = var.common_tags
+
+resource "aws_route53_zone" "aws-managed-tighov-link" {
+  name          = "tighov.link"
+  comment       = "Managed by Terraform Pipeline"
+  force_destroy = false
 }
 
-resource "aws_route53_record" "root-a" {
-  zone_id = aws_route53_zone.main.zone_id
+resource "aws_route53_record" "aws-managed-root-a" {
+  zone_id = aws_route53_zone.aws-managed-tighov-link.zone_id
   name    = var.domain_name
   type    = "A"
 
@@ -15,8 +17,8 @@ resource "aws_route53_record" "root-a" {
   }
 }
 
-resource "aws_route53_record" "www-a" {
-  zone_id = aws_route53_zone.main.zone_id
+resource "aws_route53_record" "aws-managed-www-a" {
+  zone_id = aws_route53_zone.aws-managed-tighov-link.zone_id
   name    = "www.${var.domain_name}"
   type    = "A"
 
