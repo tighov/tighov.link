@@ -13,7 +13,7 @@ sendto = os.environ['SENDTO_EMAIL']
 configset = os.environ['CONFIG_SET']
 charset = 'UTF-8'
 allow_origins_headers = {
-                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Origin": "https://www.tighov.link",
                 "Access-Control-Allow-Methods": "POST,OPTIONS",
                 "Access-Control-Allow-Headers": "Content-Type"
             }
