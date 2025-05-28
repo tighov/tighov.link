@@ -27,7 +27,10 @@ resource "aws_lambda_function" "contact_form_lambda_function" {
 
   environment {
     variables = {
-      # Add any environment variables here if needed
+      CONFIG_SET    = ""
+      CONTACT_TABLE = "tighov_link_contact_form_table"
+      SENDER_EMAIL  = "email@thetigran.com"
+      SENDTO_EMAIL  = "email@thetigran.com"
     }
   }
 
