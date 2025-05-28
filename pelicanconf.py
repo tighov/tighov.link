@@ -5,8 +5,9 @@ from __future__ import unicode_literals
 AUTHOR = 'Tigran Hovhannisyan'
 SITENAME = 'The Hov'
 
-SITETITLE = 'C, C++, Python, AWS, GO, Back-End, Dev-Ops'
-SITESUBTITLE = 'and other stuff developers do'
+SITETITLE = 'Python, DevOps, SRE, Cloud, AWS, GCP, Kubernetes, Terraform, Ansible, Docker, CI/CD, Software Development'
+SITESUBTITLE = 'and other stuff'
+SITEDESCRIPTION = 'Tigran Hovhannisyan\'s personal website and blog'
 
 SITEURL = 'https://tighov.link'
 
