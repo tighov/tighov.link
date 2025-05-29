@@ -55,10 +55,7 @@ resource "aws_lambda_permission" "apigw_lambda_permission" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.contact_form_lambda_function.function_name
   principal     = "apigateway.amazonaws.com"
-  statement_id  = "AllowExecutionFromAPIGateway"
-
-  # The source ARN is the API Gateway REST API ARN
-  source_arn = "${aws_api_gateway_rest_api.contact_form_api.execution_arn}/*/*/*"
+  source_arn    = "${aws_api_gateway_rest_api.contact_form_api.execution_arn}/*/*/*"
 }
 
 output "invoke_url" {

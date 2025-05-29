@@ -30,13 +30,11 @@ $(function () {
         type: "POST",
         crossDomain: true,
         data: JSON.stringify({
-          body: {
-            name: name,
-            subject: subject,
-            email: email,
-            key: "dGhldGlncmFuX2NvbnRhY3Q=",
-            message: message
-          }
+          name: name,
+          subject: subject,
+          email: email,
+          key: "dGhldGlncmFuX2NvbnRhY3Q=",
+          message: message
         }),
         cache: false,
         dataType: 'json',
