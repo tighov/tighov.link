@@ -41,7 +41,7 @@ $(function () {
         contentType: "application/json",
         headers: {
           "accept": "application/json",
-          "Access-Control-Allow-Origin": "https://www.tighov.link"
+          "Access-Control-Allow-Origin": "'https://www.tighov.link,https://tighov.link'"
         },
         beforeSend: function (e) {
           $("#contact-form-submit").val("Submitting...")
@@ -110,7 +110,7 @@ $(function () {
         contentType: "application/json",
         headers: {
           "accept": "application/json",
-          "Access-Control-Allow-Origin": "https://www.tighov.link"
+          "Access-Control-Allow-Origin": "'https://www.tighov.link,https://tighov.link'"
         },
         beforeSend: function (e) {
           $("#subscribe-button").val("Joining...")
