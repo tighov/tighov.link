@@ -12,25 +12,34 @@ sender = os.environ['SENDER_EMAIL']
 sendto = os.environ['SENDTO_EMAIL']
 configset = os.environ['CONFIG_SET']
 charset = 'UTF-8'
-allow_origins_headers = {
-                "Access-Control-Allow-Origin": "https://www.tighov.link,https://tighov.link",
-                "Access-Control-Allow-Methods": "POST,OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type"
-            }
+allowed_origins = ["https://www.tighov.link", "https://tighov.link"]
 
 dynamodb = boto3.resource('dynamodb')
 
 def lambda_handler(event, context):
+
+    origin = event['headers'].get('origin')
+    if origin in allowed_origins:
+        cors_origin = origin
+    else:
+        cors_origin = "https://www.tighov.link"  # fallback
+
+    headers = {
+        "Access-Control-Allow-Origin": cors_origin,
+        "Access-Control-Allow-Methods": "POST,OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type"
+    }
+
     if event['httpMethod'] == 'POST':
-        return sendMail(event, context)
+        return sendMail(event, context, headers)
     else:
         return {
             "statusCode": 405,
-            "headers": allow_origins_headers,
+            "headers": headers,
             "body": json.dumps("Method Not Allowed")
         }
 
-def sendMail(event, context):
+def sendMail(event, context, headers):
     try:
         data = event['body']
         name = data['name']
@@ -53,7 +62,7 @@ def sendMail(event, context):
         print(e.response['Error']['Message'])
         return {
             "statusCode": 501,
-            "headers": allow_origins_headers,
+            "headers": headers,
             "body": json.dumps({"error": e.response['Error']['Message']})
         }
     else:
@@ -61,11 +70,11 @@ def sendMail(event, context):
         print(response['MessageId'])
     return {
         "statusCode": 200,
-        "headers": allow_origins_headers,
+        "headers": headers,
         "body": json.dumps({"message": "OK"})
     }
 
-def list(event, context):
+def list(event, context, headers):
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
 
     # fetch all records from database
@@ -74,7 +83,7 @@ def list(event, context):
     #return response
     return {
         "statusCode": 200,
-        "headers": allow_origins_headers,
+        "headers": headers,
         "body": json.dumps(result['Items'])
     }
 
