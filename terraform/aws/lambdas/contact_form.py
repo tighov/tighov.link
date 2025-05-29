@@ -4,7 +4,6 @@ import json
 import os
 import time
 import uuid
-import decimal
 import base64
 
 client = boto3.client('ses')
@@ -12,13 +11,13 @@ sender = os.environ['SENDER_EMAIL']
 sendto = os.environ['SENDTO_EMAIL']
 configset = os.environ['CONFIG_SET']
 charset = 'UTF-8'
-allowed_origins = ["https://www.tighov.link", "https://tighov.link"]
 
 dynamodb = boto3.resource('dynamodb')
 
 def lambda_handler(event, context):
 
     origin = event['headers'].get('origin')
+    allowed_origins = ["https://www.tighov.link", "https://tighov.link"]
     if origin in allowed_origins:
         cors_origin = origin
     else:

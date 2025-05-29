@@ -40,8 +40,7 @@ $(function () {
         dataType: 'json',
         contentType: "application/json",
         headers: {
-          "accept": "application/json",
-          "Access-Control-Allow-Origin": "https://www.tighov.link"
+          "accept": "application/json"
         },
         beforeSend: function (e) {
           $("#contact-form-submit").val("Submitting...")
@@ -108,10 +107,6 @@ $(function () {
         cache: false,
         dataType: 'json',
         contentType: "application/json",
-        headers: {
-          "accept": "application/json",
-          "Access-Control-Allow-Origin": "https://www.tighov.link"
-        },
         beforeSend: function (e) {
           $("#subscribe-button").val("Joining...")
         },
