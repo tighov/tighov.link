@@ -41,6 +41,7 @@ def lambda_handler(event, context):
 def sendMail(event, context, headers):
     try:
         data = event['body']
+        data = json.loads(data)
         name = data['name']
         email = data['email']
         message = data['message']
@@ -54,8 +55,8 @@ def sendMail(event, context, headers):
                   '\n\rEmail: ' + email + '\n\r' \
                   + message
        
-        table = dynamodb.Table(table_name)
-        saveToDynamoDB(data, table)
+        # table = dynamodb.Table(table_name)
+        # saveToDynamoDB(data, table)
         response = sendMailToUser(data, emailsbj, content)
     except ClientError as e:
         print(e.response['Error']['Message'])
