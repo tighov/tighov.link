@@ -130,6 +130,8 @@ update:
 init plan apply validate:
 	make -C ./terraform/aws $@
 
+plan apply validate: init
+
 remote-state:
 	make -C ./terraform/aws-remote-state/ init validate plan apply
 
