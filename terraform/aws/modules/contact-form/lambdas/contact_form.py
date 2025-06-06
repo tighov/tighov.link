@@ -10,6 +10,7 @@ client = boto3.client('ses')
 sender = os.environ['SENDER_EMAIL']
 sendto = os.environ['SENDTO_EMAIL']
 configset = os.environ['CONFIG_SET']
+domain_name = os.environ['DOMAIN_NAME']
 charset = 'UTF-8'
 
 dynamodb = boto3.resource('dynamodb')
@@ -17,11 +18,11 @@ dynamodb = boto3.resource('dynamodb')
 def lambda_handler(event, context):
 
     origin = event['headers'].get('origin')
-    allowed_origins = ["https://www.tighov.link", "https://tighov.link"]
+    allowed_origins = ["https://www." + domain_name, "https://" + domain_name]
     if origin in allowed_origins:
         cors_origin = origin
     else:
-        cors_origin = "https://www.tighov.link"  # fallback
+        cors_origin = "https://www." + domain_name  # fallback
 
     headers = {
         "Access-Control-Allow-Origin": cors_origin,

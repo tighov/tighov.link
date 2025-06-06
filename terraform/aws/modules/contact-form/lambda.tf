@@ -59,6 +59,7 @@ resource "aws_lambda_function" "contact_form_lambda_function" {
       CONTACT_TABLE = "tighov_link_contact_form_table"
       SENDER_EMAIL  = "email@thetigran.com"
       SENDTO_EMAIL  = "email@thetigran.com"
+      DOMAIN_NAME   = var.domain_name
     }
   }
 
@@ -77,7 +78,7 @@ resource "aws_lambda_function" "options_lambda_function" {
 
   environment {
     variables = {
-
+      DOMAIN_NAME = var.domain_name
     }
   }
 
