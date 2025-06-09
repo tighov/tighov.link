@@ -6,3 +6,6 @@ validate: init
 
 apply:
 	terraform $@ -auto-approve
+
+plan: init
+apply: init

@@ -2,9 +2,6 @@ import boto3
 from botocore.exceptions import ClientError
 import json
 import os
-import time
-import uuid
-import base64
 
 client = boto3.client('ses')
 sender = os.environ['SENDER_EMAIL']
@@ -12,8 +9,8 @@ sendto = os.environ['SENDTO_EMAIL']
 configset = os.environ['CONFIG_SET']
 domain_name = os.environ['DOMAIN_NAME']
 charset = 'UTF-8'
+email_subject_prefix = os.environ['EMAIL_SUBJECT_PREFIX']
 
-dynamodb = boto3.resource('dynamodb')
 
 def lambda_handler(event, context):
 
@@ -47,17 +44,14 @@ def sendMail(event, context, headers):
         email = data['email']
         message = data['message']
         subject = data['subject']
-        table_name = base64.b64decode(data['key']).decode()
 
-        emailsbj = table_name + ' -- ' + subject
+        emailsbj = email_subject_prefix + ' -- ' + subject
         content = emailsbj + \
                   ',\n\r' + \
                   '\n\rMessage from: ' + name + \
                   '\n\rEmail: ' + email + '\n\r' \
                   + message
        
-        # table = dynamodb.Table(table_name)
-        # saveToDynamoDB(data, table)
         response = sendMailToUser(data, emailsbj, content)
     except ClientError as e:
         print(e.response['Error']['Message'])
@@ -75,33 +69,6 @@ def sendMail(event, context, headers):
         "body": json.dumps({"message": "OK"})
     }
 
-def list(event, context, headers):
-    table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
-
-    # fetch all records from database
-    result = table.scan()
-
-    #return response
-    return {
-        "statusCode": 200,
-        "headers": headers,
-        "body": json.dumps(result['Items'])
-    }
-
-def saveToDynamoDB(data, table):
-    timestamp = int(time.time() * 1000)
-    # Insert details into DynamoDB Table
-    item = {
-        'id': str(uuid.uuid1()),
-        'name': data['name'],
-        'subject': data['subject'],
-        'email': data['email'],
-        'message': data['message'],
-        'createdAt': timestamp,
-        'updatedAt': timestamp
-    }
-    table.put_item(Item=item)
-    return
 
 def sendMailToUser(data, subject, content):
     # Send Email using SES
