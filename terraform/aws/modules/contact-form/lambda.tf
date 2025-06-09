@@ -53,6 +53,7 @@ resource "aws_lambda_function" "contact_form_lambda_function" {
   memory_size      = 128
   source_code_hash = data.archive_file.lambda_zip_file.output_base64sha256
 
+
   environment {
     variables = {
       CONFIG_SET           = ""

@@ -8,13 +8,14 @@ sender = os.environ['SENDER_EMAIL']
 sendto = os.environ['SENDTO_EMAIL']
 configset = os.environ['CONFIG_SET']
 domain_name = os.environ['DOMAIN_NAME']
-charset = 'UTF-8'
 email_subject_prefix = os.environ['EMAIL_SUBJECT_PREFIX']
+charset = 'UTF-8'
 
 
 def lambda_handler(event, context):
 
-    origin = event['headers'].get('origin')
+    headers = event.get('headers', {})
+    origin = headers.get('origin', "")
     allowed_origins = ["https://www." + domain_name, "https://" + domain_name]
     if origin in allowed_origins:
         cors_origin = origin
@@ -27,7 +28,7 @@ def lambda_handler(event, context):
         "Access-Control-Allow-Headers": "Content-Type"
     }
 
-    if event['httpMethod'] == 'POST':
+    if event.get('httpMethod', "") == 'POST':
         return sendMail(event, context, headers)
     else:
         return {
