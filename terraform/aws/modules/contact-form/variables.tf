@@ -1,6 +1,3 @@
-variable "api_custom_domain_name" {
-  type = string
-}
 variable "api_custom_domain_cloudfront_domain_name" {
   type = string
 }
@@ -13,6 +10,6 @@ variable "domain_name" {
 variable "rest_api" {
   type = any
 }
-variable "rest_api_resource" {
-  type = any
+variable "stage_name" {
+  type = string
 }

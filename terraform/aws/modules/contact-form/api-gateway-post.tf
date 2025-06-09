@@ -1,14 +1,19 @@
+resource "aws_api_gateway_resource" "rest_api_resource" {
+  parent_id   = var.rest_api.root_resource_id
+  path_part   = "contact-form"
+  rest_api_id = var.rest_api.id
+}
 
 resource "aws_api_gateway_method" "contact_form_method" {
   authorization = "NONE"
   http_method   = "POST"
   rest_api_id   = var.rest_api.id
-  resource_id   = var.rest_api_resource.id
+  resource_id   = aws_api_gateway_resource.rest_api_resource.id
 }
 
 resource "aws_api_gateway_integration" "contact_form_lambda_integration" {
   http_method = aws_api_gateway_method.contact_form_method.http_method
-  resource_id = var.rest_api_resource.id
+  resource_id = aws_api_gateway_resource.rest_api_resource.id
   rest_api_id = var.rest_api.id
 
   integration_http_method = "POST"
@@ -20,11 +25,11 @@ resource "aws_api_gateway_integration" "contact_form_lambda_integration" {
 
 resource "aws_api_gateway_deployment" "api_deployment" {
   rest_api_id = var.rest_api.id
-  stage_name  = "prod"
+  stage_name  = var.stage_name
 
   triggers = {
     redeployment = sha1(jsonencode([
-      var.rest_api_resource.id,
+      aws_api_gateway_resource.rest_api_resource.id,
       aws_api_gateway_method.contact_form_method.id,
       aws_api_gateway_integration.contact_form_lambda_integration.id,
     ]))
@@ -48,7 +53,7 @@ resource "aws_lambda_permission" "apigw_lambda_permission" {
 
 resource "aws_api_gateway_method_response" "post_response" {
   rest_api_id = var.rest_api.id
-  resource_id = var.rest_api_resource.id
+  resource_id = aws_api_gateway_resource.rest_api_resource.id
   http_method = aws_api_gateway_method.contact_form_method.http_method
   status_code = "200"
 
@@ -65,7 +70,7 @@ resource "aws_api_gateway_method_response" "post_response" {
 
 resource "aws_api_gateway_integration_response" "post_integration_response" {
   rest_api_id = var.rest_api.id
-  resource_id = var.rest_api_resource.id
+  resource_id = aws_api_gateway_resource.rest_api_resource.id
   http_method = aws_api_gateway_method.contact_form_method.http_method
   status_code = aws_api_gateway_method_response.post_response.status_code
 

@@ -1,5 +1,5 @@
 resource "aws_api_gateway_rest_api" "rest_api" {
-  name        = "contact-form-api"
+  name        = "api.${var.domain_name}"
   description = "API Gateway for contact form"
 
   endpoint_configuration {
@@ -7,8 +7,8 @@ resource "aws_api_gateway_rest_api" "rest_api" {
   }
 }
 
-resource "aws_api_gateway_resource" "rest_api_resource" {
-  parent_id   = aws_api_gateway_rest_api.rest_api.root_resource_id
-  path_part   = "contact-form"
-  rest_api_id = aws_api_gateway_rest_api.rest_api.id
+resource "aws_api_gateway_base_path_mapping" "api_mapping" {
+  api_id      = aws_api_gateway_rest_api.rest_api.id
+  stage_name  = var.stage_name
+  domain_name = aws_api_gateway_domain_name.api_custom_domain.domain_name
 }

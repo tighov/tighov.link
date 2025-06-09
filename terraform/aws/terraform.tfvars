@@ -5,3 +5,4 @@ common_tags = {
   Environment = "prod"
   Owner       = "tighov"
 }
+stage_name = "prod"

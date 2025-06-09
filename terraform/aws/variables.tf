@@ -9,3 +9,7 @@ variable "region" {
 variable "common_tags" {
   description = "Common tags you want applied to all components."
 }
+variable "stage_name" {
+  type        = string
+  description = "The stage name for the API Gateway deployment."
+}
