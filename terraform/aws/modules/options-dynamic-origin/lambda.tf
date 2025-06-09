@@ -1,0 +1,22 @@
+data "archive_file" "options_lambda_zip_file" {
+  type        = "zip"
+  source_file = "${path.module}/lambdas/options_dynamic_origin.py"
+  output_path = "${path.module}/lambdas/options_dynamic_origin.zip"
+}
+
+resource "aws_lambda_function" "options_lambda_function" {
+  function_name    = "options_dynamic_origin"
+  role             = var.lambda_role_arn
+  handler          = "options_dynamic_origin.lambda_handler"
+  runtime          = "python3.13"
+  filename         = data.archive_file.options_lambda_zip_file.output_path
+  timeout          = 30
+  memory_size      = 128
+  source_code_hash = data.archive_file.options_lambda_zip_file.output_base64sha256
+
+  environment {
+    variables = {
+      DOMAIN_NAME = var.domain_name
+    }
+  }
+}

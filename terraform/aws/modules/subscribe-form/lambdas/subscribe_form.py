@@ -6,10 +6,6 @@ import time
 import uuid
 import base64
 
-client = boto3.client('ses')
-sender = os.environ['SENDER_EMAIL']
-sendto = os.environ['SENDTO_EMAIL']
-configset = os.environ['CONFIG_SET']
 domain_name = os.environ['DOMAIN_NAME']
 charset = 'UTF-8'
 
