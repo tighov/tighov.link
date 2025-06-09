@@ -1,14 +1,14 @@
 resource "aws_api_gateway_method" "contact_form_options" {
-  rest_api_id   = aws_api_gateway_rest_api.contact_form_api.id
-  resource_id   = aws_api_gateway_resource.contact_form_api_resource.id
+  rest_api_id   = var.rest_api.id
+  resource_id   = var.rest_api_resource.id
   http_method   = "OPTIONS"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "contact_form_options_lambda_integration" {
   http_method = aws_api_gateway_method.contact_form_options.http_method
-  resource_id = aws_api_gateway_resource.contact_form_api_resource.id
-  rest_api_id = aws_api_gateway_rest_api.contact_form_api.id
+  resource_id = var.rest_api_resource.id
+  rest_api_id = var.rest_api.id
 
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
@@ -18,12 +18,12 @@ resource "aws_api_gateway_integration" "contact_form_options_lambda_integration"
 }
 
 resource "aws_api_gateway_deployment" "cf_options_deployment" {
-  rest_api_id = aws_api_gateway_rest_api.contact_form_api.id
+  rest_api_id = var.rest_api.id
   stage_name  = "prod"
 
   triggers = {
     redeployment = sha1(jsonencode([
-      aws_api_gateway_resource.contact_form_api_resource.id,
+      var.rest_api_resource.id,
       aws_api_gateway_method.contact_form_options.id,
       aws_api_gateway_integration.contact_form_options_lambda_integration.id,
     ]))
@@ -43,12 +43,12 @@ resource "aws_lambda_permission" "options_apigw_permission" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.options_lambda_function.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.contact_form_api.execution_arn}/*/OPTIONS/*"
+  source_arn    = "${var.rest_api.execution_arn}/*/OPTIONS/*"
 }
 
 resource "aws_api_gateway_method_response" "options_response" {
-  rest_api_id = aws_api_gateway_rest_api.contact_form_api.id
-  resource_id = aws_api_gateway_resource.contact_form_api_resource.id
+  rest_api_id = var.rest_api.id
+  resource_id = var.rest_api_resource.id
   http_method = aws_api_gateway_method.contact_form_options.http_method
   status_code = "200"
 
@@ -64,8 +64,8 @@ resource "aws_api_gateway_method_response" "options_response" {
 }
 
 resource "aws_api_gateway_integration_response" "options_integration_response" {
-  rest_api_id = aws_api_gateway_rest_api.contact_form_api.id
-  resource_id = aws_api_gateway_resource.contact_form_api_resource.id
+  rest_api_id = var.rest_api.id
+  resource_id = var.rest_api_resource.id
   http_method = aws_api_gateway_method.contact_form_options.http_method
   status_code = aws_api_gateway_method_response.options_response.status_code
 

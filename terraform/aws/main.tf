@@ -5,4 +5,6 @@ module "contact_form" {
   api_custom_domain_cloudfront_domain_name = aws_api_gateway_domain_name.api_custom_domain.cloudfront_domain_name
   api_custom_domain_cloudfront_zone_id     = aws_api_gateway_domain_name.api_custom_domain.cloudfront_zone_id
   domain_name                              = var.domain_name
+  rest_api                                 = aws_api_gateway_rest_api.rest_api
+  rest_api_resource                        = aws_api_gateway_resource.rest_api_resource
 }
