@@ -11,16 +11,35 @@ domain_name = os.environ['DOMAIN_NAME']
 email_subject_prefix = os.environ['EMAIL_SUBJECT_PREFIX']
 charset = 'UTF-8'
 
+def lowercase_headers(headers):
+    """
+    Convert all header keys to lowercase.
+    """
+    if not headers or not isinstance(headers, dict):
+        return {}
+    return {k.lower(): v for k, v in headers.items()}
 
-def lambda_handler(event, context):
+def get_cors_header(headers_dict):
+    """
+    Extracts the CORS origin from the event headers.
+    """
+    origin = headers_dict.get('origin')
+    if origin and origin.endswith('/'):
+        origin = origin.rstrip('/')
+    allowed_origins = ["https://www.tighov.link", "https://tighov.link"]
 
-    headers = event.get('headers', {})
-    origin = headers.get('origin', "")
-    allowed_origins = ["https://www." + domain_name, "https://" + domain_name]
+    # Dynamically set CORS origin if allowed
     if origin in allowed_origins:
         cors_origin = origin
     else:
-        cors_origin = "https://www." + domain_name  # fallback
+        cors_origin = "https://www.tighov.link"  # fallback or set to None
+
+    return cors_origin
+
+def lambda_handler(event, context):
+
+    headers_dict = lowercase_headers(event.get('headers', {}))
+    cors_origin = get_cors_header(headers_dict)
 
     headers = {
         "Access-Control-Allow-Origin": cors_origin,
