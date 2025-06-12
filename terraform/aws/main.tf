@@ -6,4 +6,5 @@ module "contact_form" {
   domain_name                              = var.domain_name
   rest_api                                 = aws_api_gateway_rest_api.rest_api
   stage_name                               = var.stage_name
+  lambda_role_arn                          = aws_iam_role.lambda_role.arn
 }

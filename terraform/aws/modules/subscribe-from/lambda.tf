@@ -4,10 +4,10 @@ data "archive_file" "lambda_zip_file" {
   output_path = "${path.module}/lambdas/subscribe_form.zip"
 }
 
-resource "aws_lambda_function" "contact_form_lambda_function" {
-  function_name    = "contact_form_lambda"
-  role             = aws_iam_role.lambda_role.arn
-  handler          = "contact_form.lambda_handler"
+resource "aws_lambda_function" "subscribe_form_lambda_function" {
+  function_name    = "subscribe_form_lambda"
+  role             = var.lambda_role_arn
+  handler          = "subscribe_form.lambda_handler"
   runtime          = "python3.13"
   filename         = data.archive_file.lambda_zip_file.output_path
   timeout          = 30
@@ -16,11 +16,10 @@ resource "aws_lambda_function" "contact_form_lambda_function" {
 
   environment {
     variables = {
-      CONFIG_SET    = ""
-      CONTACT_TABLE = "tighov_link_contact_form_table"
-      SENDER_EMAIL  = "email@thetigran.com"
-      SENDTO_EMAIL  = "email@thetigran.com"
-      DOMAIN_NAME   = var.domain_name
+      CONFIG_SET   = ""
+      SENDER_EMAIL = "email@thetigran.com"
+      SENDTO_EMAIL = "email@thetigran.com"
+      DOMAIN_NAME  = var.domain_name
     }
   }
 
@@ -29,7 +28,7 @@ resource "aws_lambda_function" "contact_form_lambda_function" {
 
 resource "aws_lambda_function" "options_lambda_function" {
   function_name    = "options_dynamic_origin"
-  role             = aws_iam_role.lambda_role.arn
+  role             = var.lambda_role_arn
   handler          = "options_dynamic_origin.lambda_handler"
   runtime          = "python3.13"
   filename         = data.archive_file.options_lambda_zip_file.output_path
