@@ -5,9 +5,9 @@ from __future__ import unicode_literals
 AUTHOR = 'Tigran Hovhannisyan'
 SITENAME = 'The Hov'
 
-SITETITLE = 'Python, DevOps, SRE, Cloud, AWS, GCP, Kubernetes, Terraform, Ansible, Docker, CI/CD, Software Development'
-SITESUBTITLE = 'and other stuff'
-SITEDESCRIPTION = 'Tigran Hovhannisyan\'s personal website and blog'
+SITETITLE = 'Infrastructure as Code. CI/CD. Cloud Engineering.'
+SITESUBTITLE = 'Turning Cloud Complexity into Developer Simplicity'
+SITEDESCRIPTION = 'Helping teams build, automate, and scale in the cloud with ease.'
 
 SITEURL = 'https://tighov.link'
 
@@ -61,21 +61,25 @@ HEADER_COVER = "images/home-bg.jpg"
 
 INTRO_CONTENT = """
     <p class="lead">
-      I am passionate about software development, and in an age of digital I believe bringing ideas to life with code is essential. So, I specialise in a multi-disciplined approach to my work incorporating software design and development.
-      <br><br>
-      A full-time software developer, I’m 32 and currently based in Cork in Ireland.
+
+    <p>
+    👋 Hello and welcome to my personal website!
     </p>
 
     <p>
-      The focus of my work shifts as the need arises for certain skills in the working environment. This can be both a positive and negative experience, on the one hand you can hone your skills in an in-demand area, but on the other hand you’re ready to explore different areas. This is why I explore ideas and concepts outside of my work so I always have something new to share.
+    I’m Tigran Hovhannisyan, a DevOps and Cloud Infrastructure Engineer with over 12 years of experience building scalable, automated, and reliable platforms across major cloud providers like GCP, AWS, and OCI.
     </p>
 
     <p>
-      At work I’m known for my love of extracurricular activity! I enjoy creating side projects outside of my working life to share and engage with others. This can be through competitions, websites or games. Work makes up such a big part of our lives and I believe in expanding my ideas and skills without needing it to be on a employee brief.
+    Here you’ll find details about my professional journey — from designing developer platforms and CI/CD pipelines to implementing Infrastructure as Code and container orchestration solutions. My passion lies in helping teams ship faster, operate reliably, and scale effortlessly through automation and cloud-native best practices.
     </p>
 
     <p>
-      My work doesn’t end with the brief. Going above and beyond the parameters that have been set out is essential, not only for your own personal achievement and development but it reflects back into the work you produce.
+    Feel free to explore my resume, browse my personal projects, or reach out if you'd like to collaborate on challenging infrastructure or cloud engineering problems.
+    </p>
+    
+    <p>
+    Thanks for visiting!
     </p>
 """
 
