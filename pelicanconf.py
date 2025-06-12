@@ -60,22 +60,18 @@ EXTRA_PATH_METADATA = {
 HEADER_COVER = "images/home-bg.jpg"
 
 INTRO_CONTENT = """
-    <p class="lead">
+    <p class="lead">👋 Hello and welcome to my personal website!</p>
 
     <p>
-    👋 Hello and welcome to my personal website!
+    I’m Tigran Hovhannisyan, a DevOps and Cloud Infrastructure Engineer with over 12 years of experience building scalable, automated, and reliable platforms across major cloud providers such as GCP, AWS, and OCI.
     </p>
 
     <p>
-    I’m Tigran Hovhannisyan, a DevOps and Cloud Infrastructure Engineer with over 12 years of experience building scalable, automated, and reliable platforms across major cloud providers like GCP, AWS, and OCI.
+    Here you’ll find details about my professional journey — from designing developer platforms and CI/CD pipelines to implementing Infrastructure as Code and container orchestration solutions. My passion is helping teams ship faster, operate reliably, and scale effortlessly through automation and cloud-native best practices.
     </p>
 
     <p>
-    Here you’ll find details about my professional journey — from designing developer platforms and CI/CD pipelines to implementing Infrastructure as Code and container orchestration solutions. My passion lies in helping teams ship faster, operate reliably, and scale effortlessly through automation and cloud-native best practices.
-    </p>
-
-    <p>
-    Feel free to explore my resume, browse my personal projects, or reach out if you'd like to collaborate on challenging infrastructure or cloud engineering problems.
+    Feel free to explore my resume, browse my personal projects, or reach out if you’d like to collaborate on challenging infrastructure or cloud engineering problems.
     </p>
     
     <p>
@@ -84,11 +80,11 @@ INTRO_CONTENT = """
 """
 
 MAIN_MENU = [
-("CV", "", (
-            ("PDF", "cv/tighov_link_full.pdf"),
-            ("MS Word", "cv/tighov_link_full.docx"),
-            ("Linkedin Profile", "http://www.linkedin.com/in/thetigran")
-           ))
+    ("CV", "", (
+        ("PDF", "cv/tighov_link_full.pdf"),
+        ("MS Word", "cv/tighov_link_full.docx"),
+        ("LinkedIn Profile", "https://www.linkedin.com/in/thetigran")
+    ))
 ]
 
 SERVICES = []

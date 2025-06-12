@@ -3,8 +3,8 @@ Slug: clean-code
 Date: 2025-01-03 21:01
 Tags: sw-arch
 Category: Software, Design
-Summary: In this blog post I talk about clean code and some quick tips to help in daily life of a software developer
 Status: published
+Summary: In this blog post I talk about clean code and some quick tips to help in daily life of a software developer
 Header_Cover: images/posts/clean-code/cover.jpg
 
 #### Why clean code is important

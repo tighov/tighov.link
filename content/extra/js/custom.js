@@ -1104,4 +1104,7 @@ jQuery(document).ready(function ($) {
         this.previousTop = currentTop;
       });
   }
+
+  $("article table").addClass("table table-condensed table-bordered table-hover");
+
 });
