@@ -80,10 +80,9 @@ INTRO_CONTENT = """
 """
 
 MAIN_MENU = [
-("CV", "", (("One Page (PDF)", "cv/tighov_link.pdf"),
-            ("One Page (MS Word)", "cv/tighov_link.doc"),
-            ("Full (PDF)", "cv/tighov_link_full.pdf"),
-            ("Full (MS Word)", "cv/tighov_link_full.docx"),
+("CV", "", (
+            ("PDF", "cv/tighov_link_full.pdf"),
+            ("MS Word", "cv/tighov_link_full.docx"),
             ("Linkedin Profile", "http://www.linkedin.com/in/thetigran")
            ))
 ]
