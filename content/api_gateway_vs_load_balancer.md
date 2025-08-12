@@ -7,11 +7,11 @@ Status: published
 Summary: Understand the difference between API Gateway and Load Balancer in cloud architecture, with AWS configuration examples.
 Author: Tigran Hovhannisyan
 
-## Introduction
+### Introduction
 
 In cloud and microservices architectures, **API Gateways** and **Load Balancers** serve distinct but essential roles. This guide clarifies their differences with practical AWS examples.
 
-## API Gateway vs Load Balancer — Key Differences
+### API Gateway vs Load Balancer — Key Differences
 
 | Aspect              | API Gateway                                                                                                                                               | Load Balancer                                                                                    |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -22,9 +22,10 @@ In cloud and microservices architectures, **API Gateways** and **Load Balancers*
 | **Examples**        | AWS API Gateway, Kong, Apigee, Azure API Management                                                                                                       | AWS Elastic Load Balancer (ALB/NLB), NGINX, HAProxy, GCP Load Balancer                           |
 | **Security**        | Advanced API-level security: OAuth, JWT, API keys.                                                                                                        | SSL Termination, Basic Routing                                                                   |
 
-## AWS Examples
 
-### API Gateway (REST API example)
+### AWS Examples
+
+#### API Gateway (REST API example)
 
 ```yaml
 Resources:
@@ -34,7 +35,7 @@ Resources:
       Name: "MyDemoAPI"
 ```
 
-### Load Balancer (Application Load Balancer example)
+#### Load Balancer (Application Load Balancer example)
 
 ```yaml
 Resources:
@@ -48,12 +49,12 @@ Resources:
         - subnet-0fedcba9876543210
 ```
 
-## When to Use Which?
+### When to Use Which?
 
 - **API Gateway**: Managing and securing APIs, enforcing auth (e.g., OAuth/JWT), rate limiting.
 - **Load Balancer**: Spreading web/app traffic across servers, providing redundancy.
 
-## Conclusion
+### Conclusion
 
 API Gateway and Load Balancer both ensure scalability and availability but are used in different layers and contexts. Combining them often results in a robust cloud architecture.
 

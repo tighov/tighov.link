@@ -2,20 +2,20 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = 'Tigran Hovhannisyan'
-SITENAME = 'The Hov'
+AUTHOR = "Tigran Hovhannisyan"
+SITENAME = "The Hov"
 
-SITETITLE = 'Infrastructure as Code. CI/CD. Cloud Engineering.'
-SITESUBTITLE = 'Turning Cloud Complexity into Developer Simplicity'
-SITEDESCRIPTION = 'Helping teams build, automate, and scale in the cloud with ease.'
+SITETITLE = "Infrastructure as Code. CI/CD. Cloud Engineering."
+SITESUBTITLE = "Turning Cloud Complexity into Developer Simplicity"
+SITEDESCRIPTION = "Helping teams build, automate, and scale in the cloud with ease."
 
-SITEURL = 'https://tighov.link'
+SITEURL = "https://tighov.link"
 
-PATH = 'content'
+PATH = "content"
 
-TIMEZONE = 'Europe/Paris'
+TIMEZONE = "Europe/Paris"
 
-DEFAULT_LANG = 'en'
+DEFAULT_LANG = "en"
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -25,10 +25,12 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Pelican', 'http://getpelican.com/'),
-         ('Python.org', 'http://python.org/'),
-         ('Jinja2', 'http://jinja.pocoo.org/'),
-         ('You can modify those links in your config file', '#'),)
+LINKS = (
+    ("Pelican", "http://getpelican.com/"),
+    ("Python.org", "http://python.org/"),
+    ("Jinja2", "http://jinja.pocoo.org/"),
+    ("You can modify those links in your config file", "#"),
+)
 
 # Social widget
 # SOCIAL = (('You can add links in your config file', '#'),
@@ -39,22 +41,22 @@ DEFAULT_PAGINATION = 10
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = False
 
-THEME = 'theme'
+THEME = "theme"
 
 STATIC_PATHS = [
-    'images',
-    'cv',
-    'extra',
+    "images",
+    "cv",
+    "extra",
 ]
 
 EXTRA_PATH_METADATA = {
-    'extra/css/custom.css': {'path': 'custom.css'},
-    'extra/js/custom.js':{'path': 'custom.js'},
-    'extra/robots.txt': {'path': 'robots.txt'},
-    'extra/favicon.ico': {'path': 'favicon.ico'},
-    'extra/CNAME': {'path': 'CNAME'},
-    'extra/LICENSE': {'path': 'LICENSE'},
-    'extra/README': {'path': 'README'},
+    "extra/css/custom.css": {"path": "custom.css"},
+    "extra/js/custom.js": {"path": "custom.js"},
+    "extra/robots.txt": {"path": "robots.txt"},
+    "extra/favicon.ico": {"path": "favicon.ico"},
+    "extra/CNAME": {"path": "CNAME"},
+    "extra/LICENSE": {"path": "LICENSE"},
+    "extra/README": {"path": "README"},
 }
 
 HEADER_COVER = "images/home-bg.jpg"
@@ -80,16 +82,21 @@ INTRO_CONTENT = """
 """
 
 MAIN_MENU = [
-    ("CV", "", (
-        ("PDF", "cv/tighov_link_full.pdf"),
-        ("MS Word", "cv/tighov_link_full.docx"),
-        ("LinkedIn Profile", "https://www.linkedin.com/in/thetigran")
-    ))
+    (
+        "CV",
+        "",
+        (
+            ("PDF", "cv/tighov_link_full.pdf"),
+            ("MS Word", "cv/tighov_link_full.docx"),
+            ("PDF Python Web", "cv/tigran_python_web_full.pdf"),
+            ("MS Word Python Web", "cv/tigran_python_web_full.docx"),
+            ("LinkedIn Profile", "https://www.linkedin.com/in/thetigran"),
+        ),
+    )
 ]
 
 SERVICES = []
 
-CSS_OVERRIDE = 'custom.css'
+CSS_OVERRIDE = "custom.css"
 
-CUSTOM_JS = 'custom.js'
-
+CUSTOM_JS = "custom.js"
