@@ -1,171 +1,175 @@
 {% extends "base.html" %}
 
+{% block title %}{{ SITENAME }} — Infrastructure as Code, CI/CD, Cloud Engineering{% endblock %}
 
-{% block header %}
-<!-- Page Header -->
-<!-- Set your background image for this header on the line below. -->
-{% if HEADER_COVER %}
-<header class="intro-header" style="background-image: url('{{ SITEURL }}/{{ HEADER_COVER }}')">
-  {% elif HEADER_COLOR %}
-  <header class="intro-header" style="background-color: {{ HEADER_COLOR }}">
-    {% else %}
-    <header class="intro-header"
-      style="background-image: url('{{ SITEURL }}/{{ THEME_STATIC_DIR }}/images/home-bg.jpg')">
-      {% endif %}
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12  col-md-12 col-md-offset-1">
-            <div class="page-heading">
-              <h1>
-                {{ SITETITLE }}</h1>
-              {% if SITESUBTITLE %}
-              <hr class="small">
-              <span class="subheading">
-                {{ SITESUBTITLE }}</span>
-              {% endif %}
-              {% if SOCIAL and SHOW_SOCIAL_ON_INDEX_PAGE_HEADER %}
-              <ul class="list-inline text-center">
-                {% for name,link in SOCIAL %}
-                <li>
-                  <a href="{{ link }}">
-                    <span class="fa-stack fa-lg">
-                      <i class="fa fa-{{ name|lower }} fa-stack-1x fa-inverse">
-                      </i>
-                    </span>
-                  </a>
-                </li>
-                {% endfor %}
-              </ul>
-              {% endif %}
-            </div>
-          </div>
-        </div>
+{% block content %}
+<div class="site-wrap">
+
+  <!-- ── Hero ──────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hero-eyebrow">DevOps &amp; Cloud Infrastructure Engineer</p>
+      <h1 class="hero-name">Tigran<br><em>Hovhannisyan</em></h1>
+      <p class="hero-tagline">
+        Turning cloud complexity into developer simplicity &mdash; 12+ years building
+        scalable, automated platforms across GCP, AWS, and OCI.
+      </p>
+      <div class="hero-tags">
+        <span class="tag accent">Kubernetes</span>
+        <span class="tag">Infrastructure as Code</span>
+        <span class="tag">CI/CD Pipelines</span>
+        <span class="tag">Platform Engineering</span>
+        <span class="tag">GitOps</span>
+        <span class="tag">Cloud Native</span>
       </div>
-    </header>
-    {% endblock header %}
-
-
-
-    {% block intro %}
-    {% if INTRO_CONTENT %}
-    <div class="row intro-content">
-      <div class="col-lg-12 col-md-12 col-md-offset-1">
-        {{ INTRO_CONTENT }}
+      <div class="hero-actions">
+        <a href="{{ SITEURL }}/cv/tighov_link_full.pdf" class="btn btn-primary" target="_blank" rel="noopener">
+          <!-- download icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download CV
+        </a>
+        <a href="https://linkedin.com/in/thetigran" class="btn btn-secondary" target="_blank" rel="noopener">
+          <!-- linkedin icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="{{ SITEURL }}/projects.html" class="btn btn-secondary">
+          <!-- code icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Projects
+        </a>
       </div>
     </div>
-    {% endif %}
-    {% endblock intro %}
 
-    {% block content %}
+    <aside class="hero-aside">
+      <div class="avatar-ring">
+        <img src="{{ SITEURL }}/theme/images/profile.jpg" alt="Tigran Hovhannisyan" width="120" height="120" />
+      </div>
+      <span class="availability-pill">Open to work</span>
+    </aside>
+  </section>
 
-    {% for article in articles_page.object_list %}
-    <div class="post-preview">
-      <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">
+  <!-- ── Stats ─────────────────────────────────────────── -->
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="stat-num">12<sup>+</sup></div>
+      <div class="stat-label">years experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">cloud platforms</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">pipelines shipped</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">{{ articles|length }}<sup>+</sup></div>
+      <div class="stat-label">articles published</div>
+    </div>
+  </div>
+
+  <!-- ── Main grid ─────────────────────────────────────── -->
+  <div class="main-grid">
+
+    <!-- Posts -->
+    <div class="posts-col">
+      <p class="section-label">Latest writing</p>
+
+      {% for article in articles_page.object_list %}
+      <article class="post-item">
+        <div class="post-meta">
+          <span class="post-date">{{ article.date.strftime('%d %b %Y') }}</span>
+          <span class="post-dot"></span>
+          {% if article.tags %}
+          <span class="post-tag-pill">{{ article.tags[0] }}</span>
+          {% endif %}
+        </div>
         <h2 class="post-title">
-          {{ article.title }}
+          <a href="{{ SITEURL }}/{{ article.url }}" style="color: inherit; text-decoration: none;">{{ article.title }}</a>
         </h2>
-      </a>
-      {% if SHOW_FULL_ARTICLE %}
-      {{ article.content }}
-      {% else %}
-      <p class="article-summary">
-        {% if article.has_summary %}
-        {{ article.summary }}
-        {% elif article.summary %}
-        {{ article.summary|striptags|truncate(140) }}
+        {% if article.summary %}
+        <p class="post-excerpt">{{ article.summary | striptags | truncate(140) }}</p>
         {% endif %}
-      </p>
-      {% endif %}
-      <p class="post-meta">
-        Posted by
-        {% for author in article.authors %}
-        <a href="{{ SITEURL }}/{{ author.url }}">
-          {{ author }}</a>
+      </article>
+      {% endfor %}
+
+      <!-- Pagination -->
+      {% if articles_page.has_other_pages() %}
+      <nav class="pagination" aria-label="Page navigation">
+        {% if articles_page.has_previous() %}
+        <a href="{{ SITEURL }}/{{ articles_previous_page.save_as }}" class="page-btn">&larr;</a>
+        {% endif %}
+        {% for page_num in articles_page.paginator.page_range %}
+        <a href="{{ SITEURL }}/{% if page_num == 1 %}index.html{% else %}index{{ page_num }}.html{% endif %}"
+           class="page-btn{% if page_num == articles_page.number %} active{% endif %}">{{ page_num }}</a>
         {% endfor %}
-        on {{ article.locale_date }}
-      </p>
-      {% include 'comments.html' %}
-    </div>
-    {% endfor %}
-    {% include "pagination.html" %}
-    {% endblock content %}
+        {% if articles_page.has_next() %}
+        <a href="{{ SITEURL }}/{{ articles_next_page.save_as }}" class="page-btn">&rarr;</a>
+        {% endif %}
+      </nav>
+      {% endif %}
+    </div><!-- /posts-col -->
 
+    <!-- Sidebar -->
+    <aside class="sidebar">
 
-
-    {% block contacts %}
-    <div class="well">
-      <p class="lead">
-        Feel free to drop me a line! I'll reply you as quick as possible.
-      </p>
-    </div>
-    <div class="contact-form">
-      <div class="form-group">
-        <div class="col-md-12 text-center">
-          <button type="button" class="btn btn_custom btn_round btn-outline-secondary" data-toggle="modal"
-            data-target="#exampleModalCenter">Get In Touch</button>
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModalCenter">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title mb-0 font-weight-bold" id="exampleModalLongTitle"> Contact Us</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <form id="contact-form" class="custom_form_body">
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="name" placeholder="Name" maxlength="255" required>
-                    </div>
-                    <div class="form-group">
-                      <input type="email" class="form-control" id="email" placeholder="Email" maxlength="255" required>
-                    </div>
-
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="subject" placeholder="Subject" maxlength="255"
-                        required>
-                    </div>
-
-                    <div class="form-group mt-2">
-                      <textarea name="message" id="message" rows="6" class="form-control" placeholder="Your message..."
-                        maxlength="8192" required></textarea>
-                    </div>
-                    <div id="success"></div>
-                    <div>
-                      <input id="contact-form-submit" class="btn btn-secondary" value="Submit" type="submit">
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
+      <!-- CV links -->
+      <div class="sidebar-section">
+        <p class="section-label">Resume</p>
+        <div class="cv-links">
+          <a href="{{ SITEURL }}/cv/tighov_link_full.pdf" class="cv-link" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Full CV &mdash; PDF
+          </a>
+          <a href="{{ SITEURL }}/cv/tighov_link_full.docx" class="cv-link" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Full CV &mdash; Word
+          </a>
+          <a href="{{ SITEURL }}/cv/tigran_python_web_full.pdf" class="cv-link" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Python/Web CV &mdash; PDF
+          </a>
+          <a href="https://linkedin.com/in/thetigran" class="cv-link" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn Profile
+          </a>
         </div>
       </div>
-    </div>
-    </div>
-    {% endblock contacts %}
 
-    {% block donate %}
-    <div class="well">
-      <p class="lead">
-        Got inspired? Copied the theme? Or do you just like the website? No problem, just buy me a coffee and make me
-        happy!
-      </p>
-    </div>
-    <div class="donate-form">
-      <div class="form-group">
-        <div class="col-md-12 text-center">
-          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-            <input type="hidden" name="cmd" value="_donations" />
-            <input type="hidden" name="business" value="tighovhann@outlook.com" />
-            <input type="hidden" name="item_name" value="Charity, buy me a coffee" />
-            <input type="hidden" name="currency_code" value="EUR" />
-            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0"
-              name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-            <img alt="" border="0" src="https://www.paypal.com/en_IE/i/scr/pixel.gif" width="1" height="1" />
-          </form>
+      <!-- Skills -->
+      <div class="sidebar-section">
+        <p class="section-label">Skills &amp; stack</p>
+        <div class="skill-cloud">
+          <span class="skill-tag k8s">Kubernetes</span>
+          <span class="skill-tag gcp">GCP</span>
+          <span class="skill-tag aws">AWS</span>
+          <span class="skill-tag">OCI</span>
+          <span class="skill-tag iac">Terraform</span>
+          <span class="skill-tag ci">CI/CD</span>
+          <span class="skill-tag iac">Helm</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag ci">ArgoCD</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Bash</span>
+          <span class="skill-tag iac">Ansible</span>
         </div>
       </div>
-    </div>
-    {% endblock donate %}
+
+      <!-- Contact -->
+      <div class="sidebar-section">
+        <p class="section-label">Contact</p>
+        <div class="contact-box">
+          <p>Have a challenging infrastructure problem? Open to consulting, collaboration, or a chat about cloud engineering.</p>
+          <a href="mailto:{{ CONTACT_EMAIL }}" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Get in touch
+          </a>
+        </div>
+      </div>
+
+    </aside><!-- /sidebar -->
+  </div><!-- /main-grid -->
+
+</div><!-- /site-wrap -->
+{% endblock %}

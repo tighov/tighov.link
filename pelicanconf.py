@@ -1,102 +1,51 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
-from __future__ import unicode_literals
 
-AUTHOR = "Tigran Hovhannisyan"
-SITENAME = "The Hov"
+AUTHOR = 'Tigran Hovhannisyan'
+SITENAME = 'The Hov'
+SITEURL = ''
 
-SITETITLE = "Infrastructure as Code. CI/CD. Cloud Engineering."
-SITESUBTITLE = "Turning Cloud Complexity into Developer Simplicity"
-SITEDESCRIPTION = "Helping teams build, automate, and scale in the cloud with ease."
+PATH = 'content'
+THEME = 'theme'
 
-SITEURL = "https://tighov.link"
+TIMEZONE = 'Asia/Yerevan'
+DEFAULT_LANG = 'en'
+DEFAULT_DATE_FORMAT = '%d %b %Y'
 
-PATH = "content"
+# ── Custom variables available in templates ────────────────────
+CONTACT_EMAIL = 'tigran@tighov.link'
+COPYRIGHT_YEAR = '2026'
 
-TIMEZONE = "Europe/Paris"
-
-DEFAULT_LANG = "en"
-
-# Feed generation is usually not desired when developing
-FEED_ALL_ATOM = None
+# ── Feed config ────────────────────────────────────────────────
+FEED_ALL_ATOM = 'feeds/all.atom.xml'
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-# Blogroll
-LINKS = (
-    ("Pelican", "http://getpelican.com/"),
-    ("Python.org", "http://python.org/"),
-    ("Jinja2", "http://jinja.pocoo.org/"),
-    ("You can modify those links in your config file", "#"),
-)
-
-# Social widget
-# SOCIAL = (('You can add links in your config file', '#'),
-#           ('Another social link', '#'),)
-
+# ── Pagination ─────────────────────────────────────────────────
 DEFAULT_PAGINATION = 10
 
-# Uncomment following line if you want document-relative URLs when developing
-RELATIVE_URLS = False
-
-THEME = "theme"
-
-STATIC_PATHS = [
-    "images",
-    "cv",
-    "extra",
-]
-
+# ── Static files ───────────────────────────────────────────────
+STATIC_PATHS = ['images', 'cv', 'extra']
 EXTRA_PATH_METADATA = {
-    "extra/css/custom.css": {"path": "custom.css"},
-    "extra/js/custom.js": {"path": "custom.js"},
-    "extra/robots.txt": {"path": "robots.txt"},
-    "extra/favicon.ico": {"path": "favicon.ico"},
-    "extra/CNAME": {"path": "CNAME"},
-    "extra/LICENSE": {"path": "LICENSE"},
-    "extra/README": {"path": "README"},
+    'extra/robots.txt': {'path': 'robots.txt'},
+    'extra/favicon.ico': {'path': 'favicon.ico'},
 }
 
-HEADER_COVER = "images/home-bg.jpg"
+# ── URL structure ──────────────────────────────────────────────
+ARTICLE_URL     = '{slug}.html'
+ARTICLE_SAVE_AS = '{slug}.html'
+PAGE_URL        = '{slug}.html'
+PAGE_SAVE_AS    = '{slug}.html'
 
-INTRO_CONTENT = """
-    <p class="lead">👋 Hello and welcome to my personal website!</p>
+# ── Template pages (direct_templates generates standalone pages) ──
+DIRECT_TEMPLATES = ['index', 'archives']
 
-    <p>
-    I’m Tigran Hovhannisyan, a DevOps and Cloud Infrastructure Engineer with over 12 years of experience building scalable, automated, and reliable platforms across major cloud providers such as GCP, AWS, and OCI.
-    </p>
+# ── Social (unused by custom theme, kept for reference) ───────
+SOCIAL = (
+    ('LinkedIn', 'https://linkedin.com/in/thetigran'),
+    ('GitHub',   'https://github.com/tighov'),
+)
 
-    <p>
-    Here you’ll find details about my professional journey — from designing developer platforms and CI/CD pipelines to implementing Infrastructure as Code and container orchestration solutions. My passion is helping teams ship faster, operate reliably, and scale effortlessly through automation and cloud-native best practices.
-    </p>
-
-    <p>
-    Feel free to explore my resume, browse my personal projects, or reach out if you’d like to collaborate on challenging infrastructure or cloud engineering problems.
-    </p>
-    
-    <p>
-    Thanks for visiting!
-    </p>
-"""
-
-MAIN_MENU = [
-    (
-        "CV",
-        "",
-        (
-            ("PDF", "cv/tighov_link_full.pdf"),
-            ("MS Word", "cv/tighov_link_full.docx"),
-            ("PDF Python Web", "cv/tigran_python_web_full.pdf"),
-            ("MS Word Python Web", "cv/tigran_python_web_full.docx"),
-            ("LinkedIn Profile", "https://www.linkedin.com/in/thetigran"),
-        ),
-    )
-]
-
-SERVICES = []
-
-CSS_OVERRIDE = "custom.css"
-
-CUSTOM_JS = "custom.js"
+RELATIVE_URLS = True
