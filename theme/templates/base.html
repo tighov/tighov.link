@@ -183,6 +183,7 @@
 
 <script>
 (function() {
+
   /* ── Lambda endpoint from Pelican config ── */
   var LAMBDA_ENDPOINT = '{{ LAMBDA_ENDPOINT }}';
 
@@ -194,6 +195,9 @@
   var formWrap  = document.getElementById('form-wrap');
   var success   = document.getElementById('form-success');
   var errBox    = document.getElementById('form-error');
+
+    console.log(LAMBDA_ENDPOINT);
+
 
   function openModal(e) {
     if (e) e.preventDefault();
@@ -245,12 +249,14 @@
           'Content-Type': 'application/json',
           'accept': 'application/json'
         },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          key: 'dGhldGlncmFuX2NvbnRhY3Q=',
-          message: message
-        })
+        data: JSON.stringify({
+            body: {
+                name: name,
+                subject: subject,
+                email: email,
+                message: message
+            }
+          })
       })
       .then(function(res) {
         if (res.ok) {
