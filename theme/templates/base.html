@@ -19,6 +19,95 @@
 
   <link rel="stylesheet" href="{{ SITEURL }}/theme/css/style.css" />
 
+  <style>
+    /* ── Contact modal ── */
+    .modal-backdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      background: var(--bg);
+      border-radius: var(--radius-lg);
+      border: 0.5px solid var(--border);
+      padding: 2rem;
+      width: 100%;
+      max-width: 440px;
+      margin: 1rem;
+      position: relative;
+    }
+
+    .modal-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.375rem;
+      margin-bottom: 0.25rem;
+    }
+    .modal-subtitle {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none; border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      line-height: 1;
+      padding: 0.25rem;
+    }
+    .modal-close:hover { color: var(--text); }
+
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      margin-bottom: 0.375rem;
+      color: var(--text);
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.625rem 0.75rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.875rem;
+      background: var(--bg);
+      color: var(--text);
+      border: 0.5px solid var(--border-med);
+      border-radius: var(--radius);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--accent); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    .form-send {
+      width: 100%;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 1rem 0;
+    }
+    .form-success p { font-size: 0.9375rem; color: var(--text-muted); margin-top: 0.5rem; }
+    .form-success .checkmark {
+      font-size: 2rem;
+      color: var(--accent);
+    }
+  </style>
+
   {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -30,8 +119,11 @@
     <ul class="nav-links">
       <li class="nav-hide"><a href="{{ SITEURL }}/">writing</a></li>
       <li><a href="{{ SITEURL }}/projects.html">projects</a></li>
-      <li class="nav-hide"><a href="{{ SITEURL }}/cv/">cv</a></li>
-      <li><a href="mailto:{{ CONTACT_EMAIL }}" class="nav-cta">get in touch</a></li>
+      <li class="nav-hide">
+        <!-- CV dropdown trigger -->
+        <a href="{{ SITEURL }}/cv/tighov_link_full.pdf" target="_blank" rel="noopener">cv</a>
+      </li>
+      <li><a href="#contact" class="nav-cta" id="open-modal">get in touch</a></li>
     </ul>
   </div>
 </nav>
@@ -43,7 +135,7 @@
   <div class="site-wrap">
     <div class="footer-inner">
       <p class="footer-copy">
-        © {{ COPYRIGHT_YEAR }} Tigran Hovhannisyan &mdash;
+        &copy; {{ COPYRIGHT_YEAR }} Tigran Hovhannisyan &mdash;
         powered by <a href="https://getpelican.com" target="_blank" rel="noopener">Pelican</a>
       </p>
       <ul class="footer-links">
@@ -54,6 +146,125 @@
     </div>
   </div>
 </footer>
+
+<!-- ── Contact modal ─────────────────────────────────────── -->
+<div class="modal-backdrop" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+  <div class="modal">
+    <button class="modal-close" id="close-modal" aria-label="Close">&times;</button>
+    <h2 class="modal-title" id="modal-heading">Contact me</h2>
+    <p class="modal-subtitle">I'll reply as quickly as possible.</p>
+
+    <div id="form-wrap">
+      <div class="form-group">
+        <label for="cf-name">Name</label>
+        <input type="text" id="cf-name" placeholder="Your name" required />
+      </div>
+      <div class="form-group">
+        <label for="cf-email">Email</label>
+        <input type="email" id="cf-email" placeholder="you@example.com" required />
+      </div>
+      <div class="form-group">
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" placeholder="What's on your mind?" required></textarea>
+      </div>
+      <div id="form-error" style="display:none; font-size:0.8125rem; color:#A32D2D; margin-bottom:0.75rem;"></div>
+      <button type="button" id="cf-submit" class="btn btn-primary form-send">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        <span id="cf-btn-label">Send message</span>
+      </button>
+    </div>
+
+    <div class="form-success" id="form-success">
+      <div class="checkmark">&#10003;</div>
+      <p>Message sent! I'll get back to you soon.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  /* ── Lambda endpoint from Pelican config ── */
+  var LAMBDA_ENDPOINT = '{{ LAMBDA_ENDPOINT }}';
+
+  var backdrop  = document.getElementById('contact-modal');
+  var openBtn   = document.getElementById('open-modal');
+  var closeBtn  = document.getElementById('close-modal');
+  var submitBtn = document.getElementById('cf-submit');
+  var btnLabel  = document.getElementById('cf-btn-label');
+  var formWrap  = document.getElementById('form-wrap');
+  var success   = document.getElementById('form-success');
+  var errBox    = document.getElementById('form-error');
+
+  function openModal(e) {
+    if (e) e.preventDefault();
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  if (openBtn) openBtn.addEventListener('click', openModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', function(e) {
+    if (e.target === backdrop) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  /* Wire all [data-contact-trigger] buttons across the page */
+  document.querySelectorAll('[data-contact-trigger]').forEach(function(el) {
+    el.addEventListener('click', openModal);
+  });
+
+  /* ── Form submit → AWS Lambda via API Gateway ── */
+  if (submitBtn) {
+    submitBtn.addEventListener('click', function() {
+      var name    = document.getElementById('cf-name').value.trim();
+      var email   = document.getElementById('cf-email').value.trim();
+      var message = document.getElementById('cf-message').value.trim();
+
+      errBox.style.display = 'none';
+      errBox.textContent   = '';
+
+      if (!name || !email || !message) {
+        errBox.textContent   = 'Please fill in all fields.';
+        errBox.style.display = 'block';
+        return;
+      }
+
+      /* Disable button while sending */
+      submitBtn.disabled = true;
+      btnLabel.textContent = 'Sending…';
+
+      fetch(LAMBDA_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, message: message })
+      })
+      .then(function(res) {
+        if (res.ok) {
+          formWrap.style.display = 'none';
+          success.style.display  = 'block';
+        } else {
+          return res.text().then(function(txt) {
+            throw new Error(txt || 'Server error ' + res.status);
+          });
+        }
+      })
+      .catch(function(err) {
+        submitBtn.disabled   = false;
+        btnLabel.textContent = 'Send message';
+        errBox.textContent   = 'Something went wrong — please try again or email me directly.';
+        errBox.style.display = 'block';
+        console.error('Contact form error:', err);
+      });
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
