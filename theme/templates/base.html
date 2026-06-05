@@ -164,6 +164,10 @@
         <input type="email" id="cf-email" placeholder="you@example.com" required />
       </div>
       <div class="form-group">
+          <label for="cf-subject">Subject</label>
+          <input type="text" id="cf-subject" placeholder="Subject" required />
+      </div>
+      <div class="form-group">
         <label for="cf-message">Message</label>
         <textarea id="cf-message" placeholder="What's on your mind?" required></textarea>
       </div>
@@ -228,12 +232,13 @@
     submitBtn.addEventListener('click', function() {
       var name    = document.getElementById('cf-name').value.trim();
       var email   = document.getElementById('cf-email').value.trim();
+      var subject = document.getElementById('cf-subject').value.trim();
       var message = document.getElementById('cf-message').value.trim();
 
       errBox.style.display = 'none';
       errBox.textContent   = '';
 
-      if (!name || !email || !message) {
+      if (!name || !email || !subject || !message) {
         errBox.textContent   = 'Please fill in all fields.';
         errBox.style.display = 'block';
         return;
@@ -252,8 +257,8 @@
         data: JSON.stringify({
             body: {
                 name: name,
-                subject: subject,
                 email: email,
+                subject: subject,
                 message: message
             }
           })
