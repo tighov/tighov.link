@@ -249,36 +249,37 @@
       btnLabel.textContent = 'Sending…';
 
       fetch(LAMBDA_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'accept': 'application/json'
-        },
-        data: JSON.stringify({
-            body: {
-                name: name,
-                email: email,
-                subject: subject,
-                message: message
-            }
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+              name: name,
+              email: email,
+              subject: subject,
+              message: message
           })
       })
-      .then(function(res) {
-        if (res.ok) {
-          formWrap.style.display = 'none';
-          success.style.display  = 'block';
-        } else {
-          return res.text().then(function(txt) {
-            throw new Error(txt || 'Server error ' + res.status);
-          });
-        }
+      .then(function (res) {
+          if (res.ok) {
+              formWrap.style.display = 'none';
+              success.style.display = 'block';
+          } else {
+              return res.text().then(function (txt) {
+                  throw new Error(txt || ('Server error ' + res.status));
+              });
+          }
       })
-      .catch(function(err) {
-        submitBtn.disabled   = false;
-        btnLabel.textContent = 'Send message';
-        errBox.textContent   = 'Something went wrong — please try again or email me directly.';
-        errBox.style.display = 'block';
-        console.error('Contact form error:', err);
+      .catch(function (err) {
+          submitBtn.disabled = false;
+          btnLabel.textContent = 'Send message';
+  
+          errBox.textContent =
+              'Something went wrong — please try again or email me directly.';
+          errBox.style.display = 'block';
+  
+          console.error('Contact form error:', err);
       });
     });
   }
