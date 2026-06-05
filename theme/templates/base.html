@@ -241,8 +241,16 @@
 
       fetch(LAMBDA_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name, email: email, message: message })
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          key: 'dGhldGlncmFuX2NvbnRhY3Q=',
+          message: message
+        })
       })
       .then(function(res) {
         if (res.ok) {

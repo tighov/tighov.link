@@ -15,7 +15,7 @@ DEFAULT_DATE_FORMAT = '%d %b %Y'
 # ── Custom variables available in templates ────────────────────
 # Paste your AWS API Gateway endpoint URL here (the same one used in the original theme)
 # It looks like: https://xxxxxxxxxx.execute-api.eu-west-1.amazonaws.com/prod/contact
-LAMBDA_ENDPOINT = 'https://YOUR_API_GATEWAY_URL/prod/contact'
+LAMBDA_ENDPOINT = 'https://api.tighov.link/contact-form'
 COPYRIGHT_YEAR = '2026'
 
 # ── Feed config ────────────────────────────────────────────────
