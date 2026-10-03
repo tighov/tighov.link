@@ -487,6 +487,28 @@ img { max-width: 100%; display: block; }
   color: inherit;
 }
 
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+.article-body th,
+.article-body td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.625rem 0.75rem;
+  border-bottom: 0.5px solid var(--border-med);
+}
+.article-body th {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent-dark);
+  background: var(--accent-light);
+}
+
 /* ── Projects page ────────────────────────────────────────── */
 .page-header {
   padding: 2.5rem 0 2rem;
