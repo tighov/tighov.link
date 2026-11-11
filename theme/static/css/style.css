@@ -1,6 +1,6 @@
 /* ============================================================
    tighov.link — custom Pelican theme
-   Palette: off-white bg, teal accent #1D9E75, dark text
+   Palette: off-white bg, teal accent #177C5B, dark text
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap');
@@ -9,13 +9,13 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --accent:       #1D9E75;
+  --accent:       #177C5B;  /* darkened from #1D9E75 for WCAG AA contrast */
   --accent-light: #E1F5EE;
   --accent-mid:   #5DCAA5;
   --accent-dark:  #0F6E56;
   --text:         #1a1a18;
   --text-muted:   #6b6b66;
-  --text-faint:   #9e9e99;
+  --text-faint:   #6e6e68;  /* darkened from #9e9e99 for WCAG AA contrast */
   --border:       rgba(0,0,0,0.10);
   --border-med:   rgba(0,0,0,0.18);
   --bg:           #fafaf8;
