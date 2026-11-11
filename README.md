@@ -1,5 +1,7 @@
 # tighov.link — Redesigned Theme
 
+[![Deploy to AWS S3](https://github.com/tighov/tighov.link/actions/workflows/pelican.yml/badge.svg?branch=main)](https://github.com/tighov/tighov.link/actions/workflows/pelican.yml)
+
 ## What's in this package
 
 ```
