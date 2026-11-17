@@ -157,13 +157,13 @@ Status: published
     </div>
     <p class="project-name">tighov.link</p>
     <p class="project-desc">
-      This site — a custom Pelican theme deployed to GCS via Terraform and GitHub Actions.
-      Static, fast, and fully infrastructure-as-code.
+      Personal blog and CV site — a custom Pelican theme on an AWS serverless stack
+      (S3, CloudFront, Lambda, API Gateway), provisioned with Terraform and deployed via GitHub Actions.
     </p>
     <div class="project-stack">
       <span class="skill-tag">Pelican</span>
       <span class="skill-tag iac">Terraform</span>
-      <span class="skill-tag gcp">GCS</span>
+      <span class="skill-tag aws">AWS</span>
       <span class="skill-tag ci">GitHub Actions</span>
     </div>
     <div class="project-links">
